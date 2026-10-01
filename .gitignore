@@ -1,0 +1,7 @@
+# Local Supabase credentials
+/backend/config.js
+
+# Environment files
+.env
+.env.*
+!.env.example

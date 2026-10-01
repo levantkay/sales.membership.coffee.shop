@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brew & Benefits — Coffee POS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <aside class="sidebar glass">
+    <div class="brand">
+      <div class="brand-icon">☕</div>
+      <div>
+        <div class="brand-title">Brew & Benefits</div>
+        <div class="brand-subtitle">Coffee · POS · Membership</div>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <nav class="nav-list">
+      <button class="nav-item active" data-view="dashboard"><span>◒</span> Dashboard</button>
+      <button class="nav-item" data-view="sales"><span>＋</span> Penjualan</button>
+      <button class="nav-item" data-view="membership"><span>✦</span> Membership</button>
+      <button class="nav-item" data-view="products"><span>▦</span> Produk</button>
+    </nav>
+    <div class="sidebar-footer glass-soft">
+      <div class="mini-label">PRIVACY MODE</div>
+      <div class="privacy-line"><span class="status-dot"></span><b>Membership No.-only</b></div>
+      <p>Data pelanggan tidak menyimpan nama atau kontak pribadi.</p>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">GOOD COFFEE, CLEAN RECORDS</p>
+        <h1 id="page-title">Dashboard</h1>
+      </div>
+      <div class="topbar-actions">
+        <span class="date-pill" id="today-pill">—</span>
+        <button class="icon-button" id="refresh-btn" title="Refresh data">↻</button>
+      </div>
+    </header>
+
+    <section class="view active-view" id="view-dashboard">
+      <div class="hero glass hero-card">
+        <div>
+          <span class="chip chip-gold">COFFEE SHOP CONTROL CENTER</span>
+          <h2>Penjualan simpel. Membership yang <span class="accent">makin worth it.</span></h2>
+          <p>Kelola transaksi harian, benefit member, dan ringkasan performa dari satu layar yang tetap ringan untuk tugas sistem informasi akuntansi.</p>
+        </div>
+        <div class="hero-orbit">
+          <div class="cup-ring"><span>☕</span></div>
+          <span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card glass"><span class="stat-icon">Rp</span><div><p>Total Hari Ini</p><h3 id="stat-today-sales">Rp 0</h3></div></article>
+        <article class="stat-card glass"><span class="stat-icon">#</span><div><p>Transaksi Hari Ini</p><h3 id="stat-today-tx">0</h3></div></article>
+        <article class="stat-card glass"><span class="stat-icon">✦</span><div><p>Member Aktif</p><h3 id="stat-members">0</h3></div></article>
+        <article class="stat-card glass"><span class="stat-icon">AVG</span><div><p>Average Ticket</p><h3 id="stat-avg-ticket">Rp 0</h3></div></article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="glass panel chart-panel">
+          <div class="panel-heading"><div><p class="eyebrow">SALES PULSE</p><h3>Penjualan 7 Hari</h3></div><span class="muted-badge">IDR</span></div>
+          <canvas id="salesChart"></canvas>
+        </article>
+        <article class="glass panel chart-panel">
+          <div class="panel-heading"><div><p class="eyebrow">MEMBER MIX</p><h3>Tier Membership</h3></div><span class="muted-badge">CURRENT</span></div>
+          <canvas id="membershipChart"></canvas>
+          <div class="tier-legend" id="tier-legend"></div>
+        </article>
+      </div>
+
+      <div class="dashboard-grid lower-grid">
+        <article class="glass panel">
+          <div class="panel-heading"><div><p class="eyebrow">RECENT ACTIVITY</p><h3>Transaksi Terbaru</h3></div><button class="text-button" data-go="sales">Lihat semua →</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Receipt</th><th>Member</th><th>Subtotal</th><th>Discount</th><th>Total</th></tr></thead><tbody id="recent-sales-body"></tbody></table></div>
+        </article>
+        <article class="glass panel insight-card">
+          <p class="eyebrow">MEMBERSHIP LOGIC</p>
+          <h3>Semakin lama, semakin besar benefit.</h3>
+          <div class="tier-stack">
+            <div><span class="tier-dot bronze"></span><b>Bronze</b><span>&lt; 3 bulan · 5%</span></div>
+            <div><span class="tier-dot silver"></span><b>Silver</b><span>3–&lt; 6 bulan · 10%</span></div>
+            <div><span class="tier-dot gold"></span><b>Gold</b><span>≥ 6 bulan · 15%</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="view-sales">
+      <div class="section-head"><div><p class="eyebrow">POINT OF SALE</p><h2>Penjualan</h2><p class="section-copy">Pilih produk → cek member → pilih pembayaran → simpan transaksi.</p></div><span class="workflow-badge">4 STEP FLOW</span></div>
+      <div class="pos-grid">
+        <div class="glass panel">
+          <div class="panel-heading"><h3>Menu</h3><div class="filter-row" id="category-filter"></div></div>
+          <div class="product-grid" id="pos-products"></div>
+        </div>
+        <aside class="glass panel cart-panel">
+          <div class="panel-heading"><h3>Current Order</h3><button class="text-button" id="clear-cart">Clear</button></div>
+          <div id="cart-items" class="cart-items"></div>
+          <div class="member-box glass-soft">
+            <label for="member-number">Membership Number <span>(opsional)</span></label>
+            <div class="member-input-row"><input id="member-number" placeholder="Contoh: BRW-0001" maxlength="20"><button id="check-member" class="small-button">Cek</button></div>
+            <div id="member-status" class="member-status">Belum ada member.</div>
+          </div>
+          <div class="summary-box">
+            <div><span>Subtotal</span><b id="cart-subtotal">Rp 0</b></div>
+            <div><span>Discount</span><b id="cart-discount">- Rp 0</b></div>
+            <div class="summary-total"><span>Total</span><strong id="cart-total">Rp 0</strong></div>
+          </div>
+          <label class="field-label" for="payment-method">Payment Method</label>
+          <select id="payment-method" class="input-control"><option value="CASH">Cash</option><option value="QRIS">QRIS</option><option value="DEBIT">Debit</option><option value="EWALLET">E-Wallet</option></select>
+          <button class="primary-button" id="checkout-btn">☕ Checkout</button>
+          <div id="checkout-message" class="form-message"></div>
+        </aside>
+      </div>
+      <article class="glass panel" id="sales-history">
+        <div class="panel-heading"><div><p class="eyebrow">TRANSACTION RECORDS</p><h3>Riwayat Transaksi</h3></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Receipt</th><th>Waktu</th><th>Member</th><th>Total</th><th>Pembayaran</th><th>Aksi</th></tr></thead><tbody id="sales-history-body"></tbody></table></div>
+      </article>
+    </section>
+
+    <section class="view" id="view-membership">
+      <div class="section-head"><div><p class="eyebrow">CUSTOMER BENEFITS</p><h2>Membership</h2><p class="section-copy">Identitas member cukup berupa nomor membership untuk menjaga privasi data pelanggan.</p></div><button class="primary-button compact" id="open-member-form">＋ Member Baru</button></div>
+      <div class="membership-grid">
+        <article class="glass panel">
+          <div class="panel-heading"><div><h3>Member Directory</h3><p class="micro-copy">Tidak ada nama, alamat, atau nomor telepon.</p></div><input id="member-search" class="search-input" placeholder="Cari nomor membership…"></div>
+          <div class="table-wrap"><table><thead><tr><th>Membership No.</th><th>Joined</th><th>Tenure</th><th>Tier</th><th>Discount</th><th>Iuran sampai</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="members-body"></tbody></table></div>
+        </article>
+        <article class="glass panel tier-card">
+          <p class="eyebrow">BENEFIT SCALE</p>
+          <h3>Rule yang dipakai sistem</h3>
+          <div class="rule-row"><span class="tier-badge bronze">BRONZE</span><div><b>0–2 bulan</b><small>Diskon 5%</small></div></div>
+          <div class="rule-row"><span class="tier-badge silver">SILVER</span><div><b>3–5 bulan</b><small>Diskon 10%</small></div></div>
+          <div class="rule-row"><span class="tier-badge gold">GOLD</span><div><b>6 bulan+</b><small>Diskon 15%</small></div></div>
+          <div class="privacy-note"><b>Privacy by design</b><span>Nomor membership adalah satu-satunya identifier customer yang ditampilkan di UI.</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="view-products">
+      <div class="section-head"><div><p class="eyebrow">PRODUCT CATALOG</p><h2>Produk</h2><p class="section-copy">Kelola menu yang muncul di POS tanpa menambah kompleksitas inventory.</p></div><button class="primary-button compact" id="open-product-form">＋ Produk Baru</button></div>
+      <article class="glass panel">
+        <div class="panel-heading"><div><h3>Menu Catalog</h3><p class="micro-copy">Harga menjadi sumber unit price pada transaksi.</p></div><input id="product-search" class="search-input" placeholder="Cari produk…"></div>
+        <div class="table-wrap"><table><thead><tr><th>SKU</th><th>Produk</th><th>Kategori</th><th>Harga</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="products-body"></tbody></table></div>
+      </article>
+    </section>
+
+    <div class="modal-backdrop" id="member-modal"><div class="modal glass"><button class="modal-close" data-close="member-modal">×</button><p class="eyebrow">NEW MEMBER</p><h3>Tambah Membership</h3><p class="micro-copy">Gunakan nomor anonim, tanpa nama pelanggan.</p><form id="member-form"><label class="field-label">Membership Number<input required maxlength="20" name="membership_number" class="input-control" placeholder="BRW-0007"></label><label class="field-label">Tanggal Bergabung<input required type="date" name="joined_at" class="input-control"></label><label class="field-label">Metode Pembayaran<select name="payment_method" class="input-control"><option value="CASH">Cash</option><option value="QRIS">QRIS</option><option value="DEBIT">Debit</option><option value="EWALLET">E-Wallet</option></select></label><p class="micro-copy">Iuran bulan pertama: <b id="new-member-fee">Rp 35.000</b></p><button class="primary-button" type="submit">Simpan &amp; Bayar</button></form><div id="member-form-message" class="form-message"></div></div></div>
+    <div class="modal-backdrop" id="product-modal"><div class="modal glass"><button class="modal-close" data-close="product-modal">×</button><p class="eyebrow">NEW PRODUCT</p><h3>Tambah Produk</h3><form id="product-form"><label class="field-label">SKU<input required maxlength="30" name="sku" class="input-control" placeholder="CF-007"></label><label class="field-label">Nama Produk<input required maxlength="100" name="name" class="input-control" placeholder="Vanilla Cloud"></label><label class="field-label">Kategori<select name="category" class="input-control"><option>Coffee</option><option>Non-Coffee</option><option>Pastry</option><option>Snack</option></select></label><label class="field-label">Harga<input required min="0" step="500" type="number" name="price" class="input-control" placeholder="30000"></label><button class="primary-button" type="submit">Simpan Produk</button></form><div id="product-form-message" class="form-message"></div></div></div>
+    <div class="modal-backdrop" id="sale-edit-modal"><div class="modal glass sale-edit-modal"><button class="modal-close" data-close="sale-edit-modal">×</button><p class="eyebrow">CORRECT TRANSACTION</p><h3 id="sale-edit-title">Edit Transaksi</h3><form id="sale-edit-form"><label class="field-label" for="sale-edit-member">Membership<select id="sale-edit-member" class="input-control"><option value="">Walk-in</option></select></label><label class="field-label" for="sale-edit-payment">Metode Pembayaran<select id="sale-edit-payment" class="input-control"><option value="CASH">Cash</option><option value="QRIS">QRIS</option><option value="DEBIT">Debit</option><option value="EWALLET">E-Wallet</option></select></label><div class="sale-edit-items-heading"><h4>Item transaksi</h4><button class="small-button" id="add-sale-item" type="button">＋ Item</button></div><div id="sale-edit-items" class="sale-edit-items"></div><div class="form-message" id="sale-edit-message"></div><button class="primary-button" id="sale-edit-submit" type="submit">Simpan revisi</button></form></div></div>
+    <div class="modal-backdrop" id="sale-detail-modal"><div class="modal glass"><button class="modal-close" data-close="sale-detail-modal">×</button><p class="eyebrow">TRANSACTION DETAIL</p><h3 id="sale-detail-title">Detail Transaksi</h3><div id="sale-detail-content" class="table-wrap"></div></div></div>
+    <div class="modal-backdrop" id="membership-payment-modal"><div class="modal glass"><button class="modal-close" data-close="membership-payment-modal">×</button><p class="eyebrow">MEMBERSHIP BILLING</p><h3 id="membership-payment-title">Pembayaran Membership</h3><div id="membership-payment-summary" class="membership-payment-summary"></div><label class="field-label" for="membership-payment-method">Metode Pembayaran<select id="membership-payment-method" class="input-control"><option value="CASH">Cash</option><option value="QRIS">QRIS</option><option value="DEBIT">Debit</option><option value="EWALLET">E-Wallet</option></select></label><button class="primary-button" id="membership-payment-submit" type="button">Bayar</button><div id="membership-payment-message" class="form-message"></div></div></div>
+
+    <footer class="footer">Brew & Benefits · SIA Coffee Shop Demo · Supabase PostgreSQL · 4 core entities</footer>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="../backend/config.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
